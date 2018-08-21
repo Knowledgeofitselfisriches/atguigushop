@@ -1,0 +1,16 @@
+APPID:2016091800536282
+支付宝网关:https://openapi.alipaydev.com/gateway.do
+沙箱账号：
+商家账号mkbalf4324@sandbox.com
+商户UID2088102176112854
+登录密码111111
+账户余额
+10000充值
+买家账号vbnenu3882@sandbox.com
+登录密码111111
+支付密码111111
+用户名称沙箱环境
+证件类型身份证(IDENTITY_CARD)
+证件号码249355198501179696
+账户余额
+99999.00充值
