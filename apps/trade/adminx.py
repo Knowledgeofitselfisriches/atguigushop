@@ -1,3 +1,4 @@
+__author__ = '杨光福IT讲师'
 
 from .models import ShoppingCart,OrderInfo,OrderGoods
 import xadmin

@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 # from django.contrib import admin
+from django.views.generic import TemplateView
+
 from goods.view_apiview import GoodsListAPIView
 from goods.view_django_serializer_view import GoodsListDjangoSerializerView
 from goods.view_django_view import GoodsListDjangoView
@@ -30,7 +32,7 @@ from goods.view_generic_apiview import GoodsListGenericAPIView
 from goods.views import GoodsViewSet, GoodsCategoryViewSet
 from rest_framework_jwt.views import obtain_jwt_token
 
-from trade.views import ShoppingCartViewSet, OrderInfoViewSet
+from trade.views import ShoppingCartViewSet, OrderInfoViewSet, AlipayAPIView
 from user_operation.views import UserFavViewSet, UserLeavingMessageViewSet, UserAddressViewSet
 from users.views import VerifyCodeViewSet, UserProfileViewSet
 
@@ -39,24 +41,23 @@ router = routers.DefaultRouter()
 router.register(r"goods", GoodsViewSet)
 # 注册商品类别的路由
 router.register(r"categorys", GoodsCategoryViewSet)
-#生成验证并且发送给用户
-router.register(r"code",VerifyCodeViewSet)
+# 生成验证并且发送给用户
+router.register(r"code", VerifyCodeViewSet)
 
-#配置用户-注册后期-（修改，得到用户）
-router.register(r"users",UserProfileViewSet)
+# 配置用户-注册后期-（修改，得到用户）
+router.register(r"users", UserProfileViewSet)
 
-#注册用户收藏
-router.register(r"userfavs",UserFavViewSet)
-#注册用户留言
-router.register(r"messages",UserLeavingMessageViewSet)
-#注册用户收货地址
-router.register(r"address",UserAddressViewSet)
-#注册购物车
-router.register(r"shopcarts",ShoppingCartViewSet)
+# 注册用户收藏
+router.register(r"userfavs", UserFavViewSet)
+# 注册用户留言
+router.register(r"messages", UserLeavingMessageViewSet)
+# 注册用户收货地址
+router.register(r"address", UserAddressViewSet)
+# 注册购物车
+router.register(r"shopcarts", ShoppingCartViewSet)
 
-#订单管理
-router.register(r"orders",OrderInfoViewSet)
-
+# 订单管理
+router.register(r"orders", OrderInfoViewSet)
 
 # 这种配置很方便，后面就会体现出来
 # goods_list = GoodsListViewSet.as_view({
@@ -64,28 +65,30 @@ router.register(r"orders",OrderInfoViewSet)
 #     'get': 'list',
 # })
 urlpatterns = [
-	# url(r'^admin/', admin.site.urls),
-	url(r'^xadmin/', xadmin.site.urls),  # 配置xadmin的路由
-	# 配置xadmin后台能显示图片的路径
-	url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
-	# url(r"^goods/",goods_list,name="goods"),
-	# 使用django 的View 返回商品列表
-	url(r"^goods1/", GoodsListDjangoView.as_view(), name="goods1"),
-	# django的serializer序列化model
-	url(r"^goods2/", GoodsListDjangoSerializerView.as_view(), name="goods2"),
-	url(r'^goods3/', GoodsListAPIView.as_view(), name="goods3"),
-	url(r'^goods4/', GoodsListGenericAPIView.as_view(), name="goods4"),
-	# 注意http://127.0.0.1:8000
-	url(r'^', include(router.urls)),
-	# 配置用户登录和登出
-	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-	# 配置文档路径
-	url(r'^docs/', include_docs_urls(title='硅谷商城在线文档')),
-	# django-rest-framework的token认证
-	url(r'^api-token-auth/', views.obtain_auth_token),
+    # url(r'^admin/', admin.site.urls),
+    url(r'^xadmin/', xadmin.site.urls),  # 配置xadmin的路由
+    # 配置xadmin后台能显示图片的路径
+    url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+    # url(r"^goods/",goods_list,name="goods"),
+    # 使用django 的View 返回商品列表
+    url(r"^goods1/", GoodsListDjangoView.as_view(), name="goods1"),
+    # django的serializer序列化model
+    url(r"^goods2/", GoodsListDjangoSerializerView.as_view(), name="goods2"),
+    url(r'^goods3/', GoodsListAPIView.as_view(), name="goods3"),
+    url(r'^goods4/', GoodsListGenericAPIView.as_view(), name="goods4"),
+    # 注意http://127.0.0.1:8000
+    url(r'^', include(router.urls)),
+    # 配置用户登录和登出
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # 配置文档路径
+    url(r'^docs/', include_docs_urls(title='硅谷商城在线文档')),
+    # django-rest-framework的token认证
+    url(r'^api-token-auth/', views.obtain_auth_token),
 
-	#json web token认证--根据用户和密码-->jwt 的token
-	url(r'^login/', obtain_jwt_token),
+    # json web token认证--根据用户和密码-->jwt 的token
+    url(r'^login/', obtain_jwt_token),
+    url(r'^alipay/return/', AlipayAPIView.as_view(), name="alipay"),
+    url(r'^index/',TemplateView.as_view(template_name='index.html'),name='index')
 
 
 ]

@@ -1,7 +1,11 @@
+from AtguiguShop.settings import RETURN_URL, ALIPAY_DEBUG, ALIPAY_PUBLIC_KEY_PATH, APP_PRIVATE_KEY_PATH, APPID, \
+    APP_NOTIFY_URL
 from goods.models import Goods
 from goods.serializers import GoodsSerializer
 import time
 import random
+
+from utils.alipay import AliPay
 
 from rest_framework import serializers
 from .models import ShoppingCart, OrderInfo, OrderGoods
@@ -20,6 +24,29 @@ class OrderGoodsSerializer(serializers.ModelSerializer):
 class OrderInfoDetailSerializer(serializers.ModelSerializer):
     # 订单和订单商品关系--一对多的关系，要序列化多条
     goods = OrderGoodsSerializer(many=True)
+    alipay_url = serializers.SerializerMethodField(read_only=True)
+
+    def get_alipay_url(self, obj):
+        alipay = AliPay(
+            appid=APPID,
+            app_notify_url=RETURN_URL,
+            app_private_key_path=APP_PRIVATE_KEY_PATH,
+            alipay_public_key_path=ALIPAY_PUBLIC_KEY_PATH,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+            debug=ALIPAY_DEBUG,  # 默认False,
+            return_url=RETURN_URL,
+        )
+        url = alipay.direct_pay(
+            # 标题
+            subject=obj.order_sn,
+            # 每次测试时都要修改,交易号的字段
+            out_trade_no=obj.order_sn,
+            # 交易价格
+            total_amount=obj.order_mount
+        )
+        # 沙箱环境
+        re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(data=url)
+        print(re_url)
+        return re_url
 
     class Meta:
         model = OrderInfo
@@ -55,6 +82,31 @@ class OrderInfoSerializer(serializers.ModelSerializer):
 
         # 返回
         return attrs
+
+    alipay_url = serializers.SerializerMethodField(read_only=True)
+
+    def get_alipay_url(self, obj):
+        alipay = AliPay(
+            appid=APPID,
+            app_notify_url=RETURN_URL,
+            app_private_key_path=APP_PRIVATE_KEY_PATH,
+            alipay_public_key_path=ALIPAY_PUBLIC_KEY_PATH,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+            debug=ALIPAY_DEBUG,  # 默认False,
+            return_url=RETURN_URL,
+        )
+
+        url = alipay.direct_pay(
+            # 标题
+            subject=obj.order_sn,
+            # 每次测试时都要修改,交易号的字段
+            out_trade_no=obj.order_sn,
+            # 交易价格
+            total_amount=obj.order_mount
+        )
+        # 沙箱环境
+        re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(data=url)
+        print(re_url)
+        return re_url
 
     class Meta:
         model = OrderInfo

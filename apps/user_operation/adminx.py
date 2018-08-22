@@ -1,19 +1,22 @@
-from .models import UserFav, UserLeavingMessage, UserAddress
+__author__ = '杨光福IT讲师'
+
+from .models import UserFav,UserLeavingMessage,UserAddress
 import xadmin
 
-
 class UserFavAdmin(object):
-    pass
+	pass
 
 
 class UserLeavingMessageAdmin(object):
-    pass
+	pass
 
 
 class UserAddressAdmin(object):
-    pass
+	pass
 
 
-xadmin.site.register(UserFav, UserFavAdmin)
-xadmin.site.register(UserLeavingMessage, UserLeavingMessageAdmin)
-xadmin.site.register(UserAddress, UserAddressAdmin)
+xadmin.site.register(UserFav,UserFavAdmin)
+xadmin.site.register(UserLeavingMessage,UserLeavingMessageAdmin)
+xadmin.site.register(UserAddress,UserAddressAdmin)
+
+

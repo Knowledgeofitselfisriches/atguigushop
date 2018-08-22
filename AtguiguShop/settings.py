@@ -35,34 +35,34 @@ AUTH_USER_MODEL = "users.UserProfile"
 # Application definition
 
 INSTALLED_APPS = [
-	'django.contrib.auth',
-	'django.contrib.contenttypes',
-	'django.contrib.sessions',
-	'django.contrib.messages',
-	'django.contrib.staticfiles',
-	'users.apps.UsersConfig',  # 用户管理注册
-	'goods.apps.GoodsConfig',  # 商品管理注册
-	'DjangoUeditor',  # 后台富文本编辑
-	'trade.apps.TradeConfig',  # 交易管理注册
-	'user_operation.apps.UserOperationConfig',  # 用户操作管理注册
-	'xadmin',  # 后台管理xadmin注册
-	'crispy_forms',  # 美化表单
-	'rest_framework',  # 注册django-rest-framework
-	'django_filters',  # 配置django-filter-过滤筛选数据
-	'corsheaders',  # 忽略跨域
-	'rest_framework.authtoken',  # django-rest-framework的token认证注册
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'users.apps.UsersConfig',  # 用户管理注册
+    'goods.apps.GoodsConfig',  # 商品管理注册
+    'DjangoUeditor',  # 后台富文本编辑
+    'trade.apps.TradeConfig',  # 交易管理注册
+    'user_operation.apps.UserOperationConfig',  # 用户操作管理注册
+    'xadmin',  # 后台管理xadmin注册
+    'crispy_forms',  # 美化表单
+    'rest_framework',  # 注册django-rest-framework
+    'django_filters',  # 配置django-filter-过滤筛选数据
+    'corsheaders',  # 忽略跨域
+    'rest_framework.authtoken',  # django-rest-framework的token认证注册
 
 ]
 
 MIDDLEWARE = [
-	'corsheaders.middleware.CorsMiddleware',  # 配置忽略跨域的中间件
-	'django.middleware.security.SecurityMiddleware',
-	'django.contrib.sessions.middleware.SessionMiddleware',
-	'django.middleware.common.CommonMiddleware',
-	'django.middleware.csrf.CsrfViewMiddleware',
-	'django.contrib.auth.middleware.AuthenticationMiddleware',
-	'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # 配置忽略跨域的中间件
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 # 配置忽略所有跨域的情况
 CORS_ORIGIN_ALLOW_ALL = True
@@ -70,20 +70,20 @@ CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'AtguiguShop.urls'
 
 TEMPLATES = [
-	{
-		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [os.path.join(BASE_DIR, 'templates')]
-		,
-		'APP_DIRS': True,
-		'OPTIONS': {
-			'context_processors': [
-				'django.template.context_processors.debug',
-				'django.template.context_processors.request',
-				'django.contrib.auth.context_processors.auth',
-				'django.contrib.messages.context_processors.messages',
-			],
-		},
-	},
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        ,
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
 ]
 
 WSGI_APPLICATION = 'AtguiguShop.wsgi.application'
@@ -93,32 +93,32 @@ WSGI_APPLICATION = 'AtguiguShop.wsgi.application'
 
 
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.mysql',  # 不要忘记mysql
-		'NAME': 'freshday',  # 数据库
-		'USER': 'root',  # 账号
-		'PASSWORD': 'root',  # 密码
-		'PORT': 3306,  # 端口，不要加引号
-		'HOST': '127.0.0.1'  # 数据库所在电脑的ip
-	}
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',  # 不要忘记mysql
+        'NAME': 'freshday',  # 数据库
+        'USER': 'root',  # 账号
+        'PASSWORD': 'root',  # 密码
+        'PORT': 3306,  # 端口，不要加引号
+        'HOST': '127.0.0.1'  # 数据库所在电脑的ip
+    }
 }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-	{
-		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-	},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 # Internationalization
@@ -139,6 +139,8 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
 
 # 配置media_url
 MEDIA_URL = "/media/"
@@ -147,26 +149,25 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # 配置分页
 REST_FRAMEWORK = {
-	# #配置分页的类
-	# "DEFAULT_PAGINATION_CLASS":"rest_framework.pagination.PageNumberPagination",
-	# #配置每页显示多少条数据
-	# 'PAGE_SIZE': 10,
+    # #配置分页的类
+    # "DEFAULT_PAGINATION_CLASS":"rest_framework.pagination.PageNumberPagination",
+    # #配置每页显示多少条数据
+    # 'PAGE_SIZE': 10,
 
-	# 配置全局配置过滤器
-	# 'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    # 配置全局配置过滤器
+    # 'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # Session认证，得到用户信息
+        'rest_framework.authentication.SessionAuthentication',
+        # 得到cookie
+        'rest_framework.authentication.BasicAuthentication',
+        # 认证token-->根据token得到用户--全局
+        # 'rest_framework.authentication.TokenAuthentication',
+        # #json web token认证
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
 
-	'DEFAULT_AUTHENTICATION_CLASSES': (
-		# Session认证，得到用户信息
-		'rest_framework.authentication.SessionAuthentication',
-		# 得到cookie
-		'rest_framework.authentication.BasicAuthentication',
-		# 认证token-->根据token得到用户--全局
-		# 'rest_framework.authentication.TokenAuthentication',
-		# #json web token认证
-		# 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-
-	),
+    ),
 
 }
 # 配置支持手机号，邮箱，默认用户账号登录
@@ -175,6 +176,12 @@ import datetime
 
 # 配置jwt token认证过期
 JWT_AUTH = {
-	'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
-	'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
+APPID="2016091800536282"
+RETURN_URL = "http://127.0.0.1:8000/alipay/return/"
+APP_NOTIFY_URL = "http://127.0.0.1:8000/alipay/return/"
+APP_PRIVATE_KEY_PATH = "apps/trade/keys/private_key.txt"
+ALIPAY_PUBLIC_KEY_PATH = "apps/trade/keys/pay_key.txt"  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+ALIPAY_DEBUG = True

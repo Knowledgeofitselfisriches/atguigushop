@@ -1,6 +1,6 @@
 # _*_ coding:utf-8 _*_
-import string
 import random
+import string
 
 
 def verify_code(length):

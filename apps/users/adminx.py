@@ -11,13 +11,13 @@ class GlobalSettings(object):
     menu_style = 'accordion'
 
 
+class VerifyCodeAdmin(object):
+    pass
+
+
 class BaseXadminSetting(object):
     enable_themes = True
     use_bootswatch = True
-
-
-class VerifyCodeAdmin(object):
-    pass
 
 
 # 注册全局配置

@@ -2,6 +2,7 @@
 # coding=utf-8
 
 import random
+
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 _letter_cases = "abcdefghjkmnpqrstuvwxy"  # 小写字母，去除可能干扰的i，l，o，z
@@ -121,4 +122,3 @@ if __name__ == "__main__":
     # img.show()
     # print(mstream.getvalue())
     # img = Image.open(mstream.getvalue().decode('utf-8')).show()
-
