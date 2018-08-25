@@ -95,17 +95,17 @@ WSGI_APPLICATION = 'AtguiguShop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+#
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 不要忘记mysql
-        'NAME': 'atguigu_shop',  # 数据库
-        'USER': 'cwq',  # 账号
-        'PASSWORD': 'cwq',  # 密码
+        'NAME': 'freshday',  # 数据库
+        'USER': 'root',  # 账号
+        'PASSWORD': 'root',  # 密码
         'PORT': 3306,  # 端口，不要加引号
-        'HOST': '118.126.113.31'  # 数据库所在电脑的ip
+        'HOST': '127.0.0.1'  # 数据库所在电脑的ip
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -196,8 +196,10 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
 APPID = "2016091800536282"
-RETURN_URL = "http://118.126.113.31:8000/alipay/return/"
-APP_NOTIFY_URL = "http://118.126.113.31:8000/alipay/return/"
+# RETURN_URL = "http://118.126.113.31:8000/alipay/return/"
+# APP_NOTIFY_URL = "http://118.126.113.31:8000/alipay/return/"
+RETURN_URL = "http://127.0.0.1:8000/alipay/return/"
+APP_NOTIFY_URL = "http://127.0.0.1:8000/alipay/return/"
 APP_PRIVATE_KEY_PATH = "apps/trade/keys/private_key.txt"
 ALIPAY_PUBLIC_KEY_PATH = "apps/trade/keys/pay_key.txt"  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
 ALIPAY_DEBUG = True
