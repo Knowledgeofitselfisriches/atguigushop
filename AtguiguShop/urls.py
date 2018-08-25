@@ -88,8 +88,13 @@ urlpatterns = [
     # django-rest-framework的token认证
     url(r'^api-token-auth/', views.obtain_auth_token),
 
-    # json web token认证--根据用户和密码-->jwt 的token
-    url(r'^login/', obtain_jwt_token),
+    # json web token认证--根据用户和密码-->jwt 的token 一定要加￥ 防止冲突
+    url(r'^login/$', obtain_jwt_token),
+    # 第三方登录
+    url('', include('social_django.urls', namespace='social')),
+    # 注意http://127.0.0.1:8000
+    url(r'^', include(router.urls)),
+
     url(r'^alipay/return/', AlipayAPIView.as_view(), name="alipay"),
     url(r'^index/',TemplateView.as_view(template_name='index.html'),name='index')
 

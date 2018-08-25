@@ -64,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 # 配置忽略所有跨域的情况
 CORS_ORIGIN_ALLOW_ALL = True
@@ -81,6 +82,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 第三方跳转
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -192,7 +196,9 @@ REST_FRAMEWORK = {
 
 }
 # 配置支持手机号，邮箱，默认用户账号登录
-AUTHENTICATION_BACKENDS = ("users.views.CustomModelBackend",)
+AUTHENTICATION_BACKENDS = ("users.views.CustomModelBackend",
+                           'django.contrib.auth.backends.ModelBackend',
+                           'social_core.backends.weibo.WeiboOAuth2',)
 import datetime
 
 # 配置jwt token认证过期
@@ -230,3 +236,9 @@ CACHES = {
         }
     }
 }
+
+# 第三方登录配置
+SOCIAL_AUTH_WEIBO_KEY = '3252425763'
+SOCIAL_AUTH_WEIBO_SECRET = '063dd3ef65ef6132a6fa91293048cb85'
+# 成功后的跳转路径
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/index/'
