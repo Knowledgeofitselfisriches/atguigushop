@@ -3,7 +3,7 @@ import random
 import string
 
 
-def verify_code(length):
+def verify_code(length=4):
     s = string.ascii_letters
     n = string.digits
     source = f"{s}{n}"

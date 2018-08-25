@@ -1,5 +1,4 @@
-from AtguiguShop.settings import RETURN_URL, ALIPAY_DEBUG, ALIPAY_PUBLIC_KEY_PATH, APP_PRIVATE_KEY_PATH, APPID, \
-    APP_NOTIFY_URL
+from AtguiguShop.settings import RETURN_URL, ALIPAY_DEBUG, ALIPAY_PUBLIC_KEY_PATH, APP_PRIVATE_KEY_PATH, APPID
 from goods.models import Goods
 from goods.serializers import GoodsSerializer
 import time
@@ -24,8 +23,10 @@ class OrderGoodsSerializer(serializers.ModelSerializer):
 class OrderInfoDetailSerializer(serializers.ModelSerializer):
     # 订单和订单商品关系--一对多的关系，要序列化多条
     goods = OrderGoodsSerializer(many=True)
+    # 本model 没有该字段  ， 同时该字段是动态生成的
     alipay_url = serializers.SerializerMethodField(read_only=True)
 
+    # 订单详情里生成链接
     def get_alipay_url(self, obj):
         alipay = AliPay(
             appid=APPID,
@@ -85,6 +86,7 @@ class OrderInfoSerializer(serializers.ModelSerializer):
 
     alipay_url = serializers.SerializerMethodField(read_only=True)
 
+    # 立即结算生成的
     def get_alipay_url(self, obj):
         alipay = AliPay(
             appid=APPID,

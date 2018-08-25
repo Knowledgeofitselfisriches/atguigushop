@@ -29,7 +29,7 @@ from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 # 配置主路由
 from goods.view_generic_apiview import GoodsListGenericAPIView
-from goods.views import GoodsViewSet, GoodsCategoryViewSet
+from goods.views import GoodsViewSet, GoodsCategoryViewSet, BannerViewSet, IndexGoodsCategoryViewSet
 from rest_framework_jwt.views import obtain_jwt_token
 
 from trade.views import ShoppingCartViewSet, OrderInfoViewSet, AlipayAPIView
@@ -58,6 +58,9 @@ router.register(r"shopcarts", ShoppingCartViewSet)
 
 # 订单管理
 router.register(r"orders", OrderInfoViewSet)
+# 首页轮播图
+router.register(r"banners", BannerViewSet)
+router.register(r"indexgoods", IndexGoodsCategoryViewSet)
 
 # 这种配置很方便，后面就会体现出来
 # goods_list = GoodsListViewSet.as_view({

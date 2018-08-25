@@ -1,6 +1,6 @@
 import datetime
 
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -42,13 +42,41 @@ class ShoppingCartViewSet(viewsets.ModelViewSet):
         if self.action == "list":
             # 返回列表详情的时候详情信息
             return ShoppingCartDetailSerializer
-        else:
-            # 修改，删除，得到某一条
-            return ShoppingCartSerializer
+
+        # 修改，删除，得到某一条
+        return ShoppingCartSerializer
 
     # 得到当前请求的用户自己的购物车的信息
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+    # 商品库存的修改
+    def perform_create(self, serializer):
+        shop_cart = serializer.save()
+        goods = shop_cart.goods
+        # 商品的库存减少
+        goods.goods_num -= shop_cart.nums
+        goods.save()
+
+    # 当重购物车删除要购买的商品的时候库存增加（不购买了）
+    def perform_destroy(self, instance):
+        goods = instance.goods
+        # 商品库存增加
+        goods.goods_num += instance.nums
+        goods.save()
+        instance.delete()
+
+    # 商品库存的更新
+    def perform_update(self, serializer):
+        pre_shopcart = ShoppingCart.objects.get(id=serializer.instance.id)
+        pre_num = pre_shopcart.nums
+
+        now_shopcart = serializer.save
+        now_num = now_shopcart.nums
+        nums = now_num - pre_num
+
+        goods = pre_shopcart.goods
+        goods.goods_num -= nums
+        goods.save()
 
 
 # 订单管理接口
@@ -73,8 +101,7 @@ class OrderInfoViewSet(viewsets.GenericViewSet,
         if self.action == "retrieve":
             # 返回详情的数据--用新的序列化器
             return OrderInfoDetailSerializer
-        else:
-            return OrderInfoSerializer
+        return OrderInfoSerializer
 
     # 过滤得到自己的订单信息
     def get_queryset(self):
@@ -123,6 +150,7 @@ class AlipayAPIView(APIView):
             return_url=RETURN_URL
         )
         check_result = alipay.verify(process_query, ali_sign)
+        response = redirect('index')
         if check_result:
             order_sn = process_query.get('out_trade_no', None)
             trade_no = process_query.get('trade_no', None)
@@ -130,17 +158,21 @@ class AlipayAPIView(APIView):
 
             # 交易信息保存
             for order_info in order_infos:
+                order_goods = order_info.goods.all()
+                for order_good in order_goods:
+                    # 根据某个个订单得到对应的商品
+                    goods = order_good.goods
+                    # 商品的销量等于购物车的销量加上原来的
+                    goods.sold_num += order_good.goods_num
+                    goods.save()
+
                 order_info.trade_no = trade_no
                 order_info.pay_status = "TRADE_SUCCESS"
                 order_info.pay_time = datetime.datetime.now()
                 order_info.save()
-            response = redirect('index')
-            response.set_cookie('nextPath', 'pay', max_age=2)
-            return response
-        else:
-            response = redirect('index')
-            return response
 
+            response.set_cookie('nextPath', 'pay', max_age=2)
+        return response
 
     def post(self, request):
         process_query = {k: v for k, v in request.POST.items()}
@@ -150,10 +182,11 @@ class AlipayAPIView(APIView):
             app_notify_url=RETURN_URL,
             app_private_key_path=APP_PRIVATE_KEY_PATH,
             alipay_public_key_path=ALIPAY_PUBLIC_KEY_PATH,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
-            debug=True,  # 默认False,
+            debug=ALIPAY_DEBUG,  # 默认False,
             return_url=RETURN_URL
         )
         check_result = alipay.verify(process_query, ali_sign)
+        response = redirect('index')
         if check_result:
             order_sn = process_query.get('out_trade_no', None)
             trade_no = process_query.get('trade_no', None)
@@ -161,14 +194,19 @@ class AlipayAPIView(APIView):
 
             # 交易信息保存
             for order_info in order_infos:
+                order_goods = order_info.goods.all()
+                for order_good in order_goods:
+                    # 根据某个个订单得到对应的商品
+                    goods = order_good.goods
+                    # 商品的销量等于购物车的销量加上原来的
+                    goods.sold_num += order_good.goods_num
+                    goods.save()
+
                 order_info.trade_no = trade_no
                 order_info.pay_status = "TRADE_SUCCESS"
                 order_info.pay_time = datetime.datetime.now()
                 order_info.save()
-            response = redirect('index')
             response.set_cookie('nextPath', 'pay', max_age=2)
-            return response
-        else:
-            response = redirect('index')
-            return response
+        return response
+
 

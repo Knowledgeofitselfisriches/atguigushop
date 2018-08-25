@@ -28,7 +28,7 @@ SECRET_KEY = '4ugb5j0$g0tubzjt6f$b-5bq9jh_m)(9h_=)fqygsa@341+rlw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # 替换系统默认的User的modle
 AUTH_USER_MODEL = "users.UserProfile"
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_filters',  # 配置django-filter-过滤筛选数据
     'corsheaders',  # 忽略跨域
     'rest_framework.authtoken',  # django-rest-framework的token认证注册
+    'social_django',  # 第三方登录
 
 ]
 
@@ -72,8 +73,7 @@ ROOT_URLCONF = 'AtguiguShop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'AtguiguShop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-
+#
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 不要忘记mysql
@@ -102,6 +102,16 @@ DATABASES = {
         'HOST': '127.0.0.1'  # 数据库所在电脑的ip
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',  # 不要忘记mysql
+#         'NAME': 'atguigu_shop',  # 数据库
+#         'USER': 'cwq',  # 账号
+#         'PASSWORD': 'cwq',  # 密码
+#         'PORT': 3306,  # 端口，不要加引号
+#         'HOST': '118.126.113.31'  # 数据库所在电脑的ip
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -179,9 +189,18 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
-APPID="2016091800536282"
+APPID = "2016091800536282"
+# RETURN_URL = "http://118.126.113.31:8000/alipay/return/"
+# APP_NOTIFY_URL = "http://118.126.113.31:8000/alipay/return/"
 RETURN_URL = "http://127.0.0.1:8000/alipay/return/"
 APP_NOTIFY_URL = "http://127.0.0.1:8000/alipay/return/"
 APP_PRIVATE_KEY_PATH = "apps/trade/keys/private_key.txt"
 ALIPAY_PUBLIC_KEY_PATH = "apps/trade/keys/pay_key.txt"  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
 ALIPAY_DEBUG = True
+
+# 邮箱
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'learningandliving@163.com'
+EMAIL_HOST_PASSWORD = 'O6Y6HGW7'
+EMAIL_FROM = 'learningandliving@163.com'

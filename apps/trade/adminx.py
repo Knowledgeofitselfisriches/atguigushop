@@ -1,6 +1,5 @@
-__author__ = '杨光福IT讲师'
 
-from .models import ShoppingCart,OrderInfo,OrderGoods
+from .models import ShoppingCart, OrderInfo, OrderGoods
 import xadmin
 
 
@@ -16,7 +15,7 @@ class OrderGoodsAdmin(object):
 	pass
 
 
-xadmin.site.register(ShoppingCart,ShoppingCartAdmin)
-xadmin.site.register(OrderInfo,OrderInfoAdmin)
-xadmin.site.register(OrderGoods,OrderGoodsAdmin)
+xadmin.site.register(ShoppingCart, ShoppingCartAdmin)
+xadmin.site.register(OrderInfo, OrderInfoAdmin)
+xadmin.site.register(OrderGoods, OrderGoodsAdmin)
 
