@@ -204,3 +204,8 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = 'learningandliving@163.com'
 EMAIL_HOST_PASSWORD = 'O6Y6HGW7'
 EMAIL_FROM = 'learningandliving@163.com'
+
+# 缓存 过期时间10mins
+REST_FRAMEWORK_EXTENSIONS = {
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 10*60
+}

@@ -8,6 +8,7 @@ from goods.filters import GoodsFilter
 from goods.models import Goods, GoodsCategory, Banner
 from goods.serializers import GoodsSerializer, GoodsCategorySerializer1, BannerSerializer, IndexGoodsCategorySerializer
 from django_filters import rest_framework as filters
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 
 # mixins 模块
@@ -38,7 +39,7 @@ class GoodsPagination(PageNumberPagination):
 
 # 对于保存：提交数据原样保存，只要继承CreateModelMixin就行
 # GenericViewSet->GenericAPIView->APIView->View(django)
-class GoodsViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin):
+class GoodsViewSet(CacheResponseMixin, GenericViewSet, ListModelMixin, RetrieveModelMixin):
     # 商品列表,固定的写法,所有的商品
     queryset = Goods.objects.all()
 
