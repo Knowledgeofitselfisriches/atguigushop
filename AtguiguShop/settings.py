@@ -177,7 +177,18 @@ REST_FRAMEWORK = {
         # #json web token认证
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
 
+
     ),
+    # 配置全局限流
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ),
+    # 配置频率
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100000/day',
+        'user': '1000000/day'
+    }
 
 }
 # 配置支持手机号，邮箱，默认用户账号登录

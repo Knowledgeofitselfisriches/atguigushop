@@ -1,4 +1,5 @@
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle , AnonRateThrottle
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -40,6 +41,7 @@ class GoodsPagination(PageNumberPagination):
 # 对于保存：提交数据原样保存，只要继承CreateModelMixin就行
 # GenericViewSet->GenericAPIView->APIView->View(django)
 class GoodsViewSet(CacheResponseMixin, GenericViewSet, ListModelMixin, RetrieveModelMixin):
+    # throttle_classes = ( AnonRateThrottle, UserRateThrottle,)
     # 商品列表,固定的写法,所有的商品
     queryset = Goods.objects.all()
 
