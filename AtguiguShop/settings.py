@@ -209,7 +209,7 @@ EMAIL_HOST_USER = 'learningandliving@163.com'
 EMAIL_HOST_PASSWORD = 'O6Y6HGW7'
 EMAIL_FROM = 'learningandliving@163.com'
 # 注册地址
-EMAIL_REGISTER = 'http://127.0.0.1:8000/index/#/app/register/'
+EMAIL_REGISTER = 'http://118.126.113.31:8000/index/#/app/register/'
 
 # 缓存 过期时间10mins
 REST_FRAMEWORK_EXTENSIONS = {
