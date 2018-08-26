@@ -25,6 +25,7 @@ from rest_framework.authtoken import views
 import xadmin
 from django.views.static import serve
 from AtguiguShop.settings import MEDIA_ROOT
+from AtguiguShop.settings import STATIC_ROOT
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 # 配置主路由
@@ -62,16 +63,15 @@ router.register(r"orders", OrderInfoViewSet)
 router.register(r"banners", BannerViewSet)
 router.register(r"indexgoods", IndexGoodsCategoryViewSet)
 
-# 这种配置很方便，后面就会体现出来
-# goods_list = GoodsListViewSet.as_view({
-#     #get请求绑定ListModelMixin的list方法
-#     'get': 'list',
-# })
+# 配置全局404 500
+# handler404 = 'users.views.handler_404'
+# handler500 = 'users.views.handler_500'
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^xadmin/', xadmin.site.urls),  # 配置xadmin的路由
     # 配置xadmin后台能显示图片的路径
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
     # url(r"^goods/",goods_list,name="goods"),
     # 使用django 的View 返回商品列表
     url(r"^goods1/", GoodsListDjangoView.as_view(), name="goods1"),
@@ -96,7 +96,6 @@ urlpatterns = [
     url(r'^', include(router.urls)),
 
     url(r'^alipay/return/', AlipayAPIView.as_view(), name="alipay"),
-    url(r'^index/',TemplateView.as_view(template_name='index.html'),name='index')
-
+    url(r'^index/', TemplateView.as_view(template_name='index.html'), name='index')
 
 ]

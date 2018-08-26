@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
+from django.shortcuts import render
 from rest_framework import status
 from rest_framework import viewsets, mixins
 from rest_framework.authentication import SessionAuthentication
@@ -15,10 +16,18 @@ from utils.emails import send_email_code
 from utils.string_tools import verify_code
 
 
-from utils.yunpian import YunPian
-
 # 使用自定义用户替换系统的了
 UserProfile = get_user_model()
+
+# def handler404(request):
+#     ret = render(request, 'hander404.html')
+#     ret.status_code = 404
+#     return ret
+#
+# def handler500(request):
+#     ret = render(request, 'hander500.html')
+#     ret.status_code = 500
+#     return ret
 
 
 class CustomModelBackend(ModelBackend):
@@ -47,7 +56,7 @@ class VerifyCodeViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
 
     # 在序列化器验证手机号：是否注册，是否是正确的手机号，是否频频发送
     serializer_class = VerifyCodeSerializer
-    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
     def create(self, request, *args, **kwargs):
         print(request.data)
