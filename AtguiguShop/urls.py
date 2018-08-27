@@ -25,7 +25,7 @@ from rest_framework.authtoken import views
 import xadmin
 from django.views.static import serve
 from AtguiguShop.settings import MEDIA_ROOT
-from AtguiguShop.settings import STATIC_ROOT
+# from AtguiguShop.settings import STATIC_ROOT
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 # 配置主路由
@@ -71,7 +71,7 @@ urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),  # 配置xadmin的路由
     # 配置xadmin后台能显示图片的路径
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
-    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
+    # url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
     # url(r"^goods/",goods_list,name="goods"),
     # 使用django 的View 返回商品列表
     url(r"^goods1/", GoodsListDjangoView.as_view(), name="goods1"),

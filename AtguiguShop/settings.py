@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, "apps_extra"))
 SECRET_KEY = '4ugb5j0$g0tubzjt6f$b-5bq9jh_m)(9h_=)fqygsa@341+rlw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -95,17 +95,17 @@ WSGI_APPLICATION = 'AtguiguShop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+#
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 不要忘记mysql
-        'NAME': 'atguigu_shop',  # 数据库
-        'USER': 'cwq',  # 账号
-        'PASSWORD': 'cwq',  # 密码
+        'NAME': 'freshday',  # 数据库
+        'USER': 'root',  # 账号
+        'PASSWORD': 'root',  # 密码
         'PORT': 3306,  # 端口，不要加引号
         'HOST': '127.0.0.1'  # 数据库所在电脑的ip
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -142,8 +142,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static ")
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 
 # 配置media_url
@@ -181,7 +180,7 @@ REST_FRAMEWORK = {
     # 配置频率
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100000/day',
-        'user': '100000/day'
+        'user': '1000000/day'
     }
 
 }
@@ -197,8 +196,10 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
 APPID = "2016091800536282"
-RETURN_URL = "http://118.126.113.31:80/alipay/return/"
-APP_NOTIFY_URL = "http://118.126.113.31:80/alipay/return/"
+# RETURN_URL = "http://118.126.113.31:8000/alipay/return/"
+# APP_NOTIFY_URL = "http://118.126.113.31:8000/alipay/return/"
+RETURN_URL = "http://127.0.0.1:8000/alipay/return/"
+APP_NOTIFY_URL = "http://127.0.0.1:8000/alipay/return/"
 APP_PRIVATE_KEY_PATH = "apps/trade/keys/private_key.txt"
 ALIPAY_PUBLIC_KEY_PATH = "apps/trade/keys/pay_key.txt"  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
 ALIPAY_DEBUG = True
@@ -210,7 +211,7 @@ EMAIL_HOST_USER = 'learningandliving@163.com'
 EMAIL_HOST_PASSWORD = 'O6Y6HGW7'
 EMAIL_FROM = 'learningandliving@163.com'
 # 注册地址
-EMAIL_REGISTER = 'http://118.126.113.31:80/index/#/app/register/'
+EMAIL_REGISTER = 'http://127.0.0.1:8000/index/#/app/register/'
 
 # 缓存 过期时间10mins
 REST_FRAMEWORK_EXTENSIONS = {
@@ -232,4 +233,3 @@ SOCIAL_AUTH_WEIBO_KEY = '3252425763'
 SOCIAL_AUTH_WEIBO_SECRET = '063dd3ef65ef6132a6fa91293048cb85'
 # 成功后的跳转路径
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/index/'
-
